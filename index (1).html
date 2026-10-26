@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Second Gear Motors – Used cars for sale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F7F5;
+    --surface: #FFFFFF;
+    --ink: #1A1D20;
+    --muted: #6B7178;
+    --line: #DADCDF;
+    --asphalt: #2B2F33;
+    --signal: #F2B705;
+    --on-signal: #1A1D20;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181A;
+      --surface: #202326;
+      --ink: #ECEDEE;
+      --muted: #9AA0A6;
+      --line: #33373B;
+      --asphalt: #0F1112;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    font-family: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  h1, h2, h3, .price {
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    line-height: 1.05;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem; }
+
+  /* Header */
+  header { background: var(--asphalt); color: #fff; }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1rem; }
+  .logo { font-family: "Barlow Condensed", sans-serif; font-weight: 800; font-size: 1.5rem; text-decoration: none; letter-spacing: .01em; }
+  .logo span { display: inline-block; background: var(--signal); color: var(--on-signal); padding: 0 .35rem; margin-right: .35rem; border-radius: 3px; }
+  .nav ul { display: flex; gap: 1.5rem; list-style: none; padding: 0; }
+  .nav a { text-decoration: none; opacity: .85; }
+  .nav a:hover { opacity: 1; }
+
+  /* Hero: road with a lane marking */
+  .hero { background: var(--asphalt); color: #fff; padding: 3.5rem 0 0; overflow: hidden; }
+  .hero h1 { font-size: clamp(3rem, 9vw, 6.5rem); font-weight: 800; max-width: 12ch; }
+  .hero p { max-width: 46ch; margin-top: 1rem; color: #C9CDD1; font-size: 1.15rem; }
+  .hero .btn { margin-top: 2rem; }
+  .lane {
+    margin-top: 3.5rem; height: 14px;
+    background: repeating-linear-gradient(90deg, var(--signal) 0 80px, transparent 80px 140px);
+  }
+  .road { height: 40px; background: var(--asphalt); }
+
+  .btn {
+    display: inline-block; font: 600 1rem "Barlow", sans-serif;
+    background: var(--signal); color: var(--on-signal);
+    border: 0; border-radius: 4px; padding: .8rem 1.4rem; cursor: pointer; text-decoration: none;
+  }
+  .btn:hover { filter: brightness(1.05); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+
+  /* Inventory */
+  section { padding: 4rem 0; }
+  .section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.75rem; }
+  h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; }
+  .filters { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .filters input, .filters select {
+    font: inherit; font-size: 1rem; padding: .6rem .8rem;
+    background: var(--surface); color: var(--ink);
+    border: 1.5px solid var(--line); border-radius: 4px; min-width: 0;
+  }
+  .filters input { width: 14rem; max-width: 100%; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+  .car { background: var(--surface); border: 1.5px solid var(--line); border-radius: 6px; display: flex; flex-direction: column; }
+  .car .pic { aspect-ratio: 16 / 9; display: grid; place-items: center; border-bottom: 1.5px solid var(--line); }
+  .car .pic svg { width: 78%; height: auto; }
+  .car .body { padding: 1rem 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .35rem; flex: 1; }
+  .car h3 { font-size: 1.5rem; font-weight: 600; }
+  .specs { color: var(--muted); font-size: .95rem; }
+  .row { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: .75rem; }
+  .price { font-size: 1.75rem; font-weight: 800; }
+  .empty { grid-column: 1 / -1; padding: 2rem; text-align: center; color: var(--muted); border: 1.5px dashed var(--line); border-radius: 6px; }
+
+  /* Why us */
+  .why { background: var(--surface); border-top: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 1.5rem; }
+  .why h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: .35rem; }
+  .why p { color: var(--muted); max-width: 36ch; }
+
+  /* Contact */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .contact-grid p { color: var(--muted); margin-top: .75rem; max-width: 40ch; }
+  form { display: grid; gap: .9rem; }
+  label { display: grid; gap: .3rem; font-weight: 500; font-size: .95rem; }
+  form input, form textarea, form select {
+    font: inherit; padding: .7rem .8rem; background: var(--surface); color: var(--ink);
+    border: 1.5px solid var(--line); border-radius: 4px;
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  .note { font-size: .95rem; color: var(--muted); min-height: 1.4em; }
+  .note.ok { color: var(--ink); font-weight: 600; }
+
+  footer { background: var(--asphalt); color: #C9CDD1; padding: 2rem 0; font-size: .95rem; }
+
+  @media (max-width: 720px) {
+    .nav ul { display: none; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .filters, .filters input, .filters select { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo"><span>2G</span>Second Gear Motors</a>
+    <ul>
+      <li><a href="#cars">Cars for sale</a></li>
+      <li><a href="#why">Why buy here</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Good used cars. Honest prices.</h1>
+    <p>Every car is inspected, serviced and priced to sell. Book a test drive and drive home the same week.</p>
+    <a href="#cars" class="btn">Browse cars</a>
+  </div>
+  <div class="lane" aria-hidden="true"></div>
+  <div class="road" aria-hidden="true"></div>
+</div>
+
+<main>
+  <section id="cars">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Cars for sale</h2>
+        <div class="filters">
+          <input id="q" type="search" placeholder="Search make or model" aria-label="Search make or model">
+          <select id="type" aria-label="Body type">
+            <option value="">All body types</option>
+            <option>Hatchback</option>
+            <option>Sedan</option>
+            <option>SUV</option>
+            <option>Bakkie</option>
+          </select>
+          <select id="sort" aria-label="Sort by">
+            <option value="low">Price: low to high</option>
+            <option value="high">Price: high to low</option>
+            <option value="km">Lowest mileage</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="why" class="why">
+    <div class="wrap">
+      <h2>Why buy here</h2>
+      <div class="why-grid">
+        <div><h3>Inspected</h3><p>Each car passes a 120-point check before it goes on sale.</p></div>
+        <div><h3>Fixed prices</h3><p>The price you see is the price you pay. No hidden fees.</p></div>
+        <div><h3>Finance help</h3><p>We help you apply with major banks and compare offers.</p></div>
+        <div><h3>Trade-ins</h3><p>Bring your current car and get a valuation on the spot.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <h2>Book a test drive</h2>
+        <p>Pick a car, leave your details, and we’ll call you back within one working day.</p>
+        <p>Open Monday to Saturday, 8:00 to 17:00.</p>
+      </div>
+      <form id="form" novalidate>
+        <label>Car
+          <select id="carSelect" name="car"></select>
+        </label>
+        <label>Full name
+          <input name="name" required autocomplete="name">
+        </label>
+        <label>Phone number
+          <input name="phone" type="tel" required autocomplete="tel">
+        </label>
+        <label>Message (optional)
+          <textarea name="msg"></textarea>
+        </label>
+        <button class="btn" type="submit">Book test drive</button>
+        <p class="note" id="note" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Second Gear Motors. All prices include VAT.</div>
+</footer>
+
+<script>
+  const cars = [
+    { make: "Volkswagen", model: "Polo Vivo 1.4", year: 2020, km: 68000, price: 179900, type: "Hatchback", fuel: "Petrol", gear: "Manual", color: "#C0392B" },
+    { make: "Toyota", model: "Corolla Quest 1.8", year: 2021, km: 54000, price: 249900, type: "Sedan", fuel: "Petrol", gear: "Auto", color: "#7F8C8D" },
+    { make: "Toyota", model: "Hilux 2.4 GD-6", year: 2019, km: 112000, price: 389900, type: "Bakkie", fuel: "Diesel", gear: "Manual", color: "#ECF0F1" },
+    { make: "Suzuki", model: "Swift 1.2 GL", year: 2022, km: 31000, price: 189900, type: "Hatchback", fuel: "Petrol", gear: "Manual", color: "#2E86C1" },
+    { make: "Hyundai", model: "Creta 1.5", year: 2022, km: 42000, price: 339900, type: "SUV", fuel: "Petrol", gear: "Auto", color: "#1C2833" },
+    { make: "Ford", model: "Ranger 2.2 XLS", year: 2018, km: 135000, price: 319900, type: "Bakkie", fuel: "Diesel", gear: "Manual", color: "#5D6D7E" },
+    { make: "Kia", model: "Sonet 1.5 EX", year: 2023, km: 18000, price: 329900, type: "SUV", fuel: "Petrol", gear: "Auto", color: "#D35400" },
+    { make: "Honda", model: "Ballade 1.5", year: 2020, km: 76000, price: 219900, type: "Sedan", fuel: "Petrol", gear: "Auto", color: "#922B21" }
+  ];
+
+  const shapes = {
+    Hatchback: "M20 70 L40 48 Q48 40 62 40 L120 40 Q134 40 146 52 L162 66 L180 70 Q188 72 188 80 L188 88 L12 88 L12 80 Q12 72 20 70 Z",
+    Sedan:     "M14 72 L46 50 Q54 44 66 44 L126 44 Q138 44 148 54 L160 66 L182 70 Q190 72 190 80 L190 88 L10 88 L10 80 Q10 74 14 72 Z",
+    SUV:       "M16 68 L36 40 Q42 32 54 32 L140 32 Q150 32 156 42 L168 64 L182 68 Q190 70 190 78 L190 88 L10 88 L10 78 Q10 70 16 68 Z",
+    Bakkie:    "M12 66 L34 42 Q40 36 50 36 L100 36 L104 62 L184 62 Q190 62 190 70 L190 88 L10 88 L10 72 Q10 68 12 66 Z"
+  };
+
+  const rand = n => "R " + n.toLocaleString("en-ZA").replace(/,/g, " ");
+  const kmFmt = n => n.toLocaleString("en-ZA").replace(/,/g, " ") + " km";
+
+  function carSvg(c) {
+    return `<svg viewBox="0 0 200 110" role="img" aria-label="${c.type} illustration">
+      <path d="${shapes[c.type]}" fill="${c.color}" stroke="currentColor" stroke-opacity=".25"/>
+      <circle cx="52" cy="88" r="14" fill="#2B2F33"/><circle cx="52" cy="88" r="6" fill="#B3B6B9"/>
+      <circle cx="150" cy="88" r="14" fill="#2B2F33"/><circle cx="150" cy="88" r="6" fill="#B3B6B9"/>
+    </svg>`;
+  }
+
+  const grid = document.getElementById("grid");
+  const q = document.getElementById("q");
+  const type = document.getElementById("type");
+  const sort = document.getElementById("sort");
+  const carSelect = document.getElementById("carSelect");
+
+  carSelect.innerHTML = cars.map((c, i) => `<option value="${i}">${c.year} ${c.make} ${c.model}</option>`).join("");
+
+  function render() {
+    const term = q.value.trim().toLowerCase();
+    let list = cars
+      .map((c, i) => ({ ...c, i }))
+      .filter(c => (!type.value || c.type === type.value) &&
+                   (`${c.make} ${c.model}`.toLowerCase().includes(term)));
+    if (sort.value === "low") list.sort((a, b) => a.price - b.price);
+    if (sort.value === "high") list.sort((a, b) => b.price - a.price);
+    if (sort.value === "km") list.sort((a, b) => a.km - b.km);
+
+    grid.innerHTML = list.length ? list.map(c => `
+      <article class="car">
+        <div class="pic">${carSvg(c)}</div>
+        <div class="body">
+          <h3>${c.year} ${c.make} ${c.model}</h3>
+          <div class="specs">${kmFmt(c.km)}, ${c.fuel}, ${c.gear}, ${c.type}</div>
+          <div class="row">
+            <span class="price">${rand(c.price)}</span>
+            <button class="btn ghost" data-car="${c.i}">Test drive</button>
+          </div>
+        </div>
+      </article>`).join("")
+      : `<div class="empty">No cars match your search. Try another make or clear the filters.</div>`;
+  }
+
+  grid.addEventListener("click", e => {
+    const b = e.target.closest("[data-car]");
+    if (!b) return;
+    carSelect.value = b.dataset.car;
+    document.getElementById("contact").scrollIntoView();
+    document.querySelector('[name="name"]').focus({ preventScroll: true });
+  });
+
+  [q, type, sort].forEach(el => el.addEventListener("input", render));
+
+  document.getElementById("form").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = e.target, note = document.getElementById("note");
+    if (!f.name.value.trim() || !f.phone.value.trim()) {
+      note.className = "note";
+      note.textContent = "Enter your name and phone number to book.";
+      return;
+    }
+    const c = cars[f.car.value];
+    note.className = "note ok";
+    note.textContent = `Test drive booked for the ${c.year} ${c.make} ${c.model}. We’ll call ${f.name.value.trim()} soon.`;
+    f.reset();
+  });
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  render();
+</script>
+</body>
+</html>
